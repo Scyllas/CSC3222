@@ -61,7 +61,6 @@ void Entity::setAggroRange(float r) {
 
 float Entity::distanceBetweenSQ(Entity e) {
 
-	//no value can be passed that could cause a sqrt error since it is raised to the power beforehand
 	return
 		pow(position->x - e.position->x, 2) +
 		pow(position->y - e.position->y, 2) +
@@ -71,8 +70,8 @@ float Entity::distanceBetweenSQ(Entity e) {
 ostream & operator<<(ostream & stream, const Entity & entity)
 {
 	stream << "Entity: (" << 
-		entity.position->x << ', ' <<
-		entity.position->y << ', ' <<
+		entity.position->x << ", " <<
+		entity.position->y << ", " <<
 		entity.position->z << "), r = " <<
 		entity.aggroRange;
 

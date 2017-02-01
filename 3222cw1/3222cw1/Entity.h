@@ -13,7 +13,7 @@ public:
 	Entity(const Entity &obj);
 	~Entity();
 
-	inline void resetAggroRange(float x) { aggroRange = 0; }
+	inline void resetEntitiesInRange() { entitiesInRange = 0; }
 	float distanceBetweenSQ(Entity e);
 
 	inline float getX() const { return position->x; }

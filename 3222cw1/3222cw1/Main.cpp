@@ -4,7 +4,7 @@
 
 #define MAX_X 10
 #define MAX_Y 10
-#define MAX_Z 10
+#define MAX_Z 1
 #define MAX_R 5
 #define NUM_ENTITIES 10
 
@@ -26,7 +26,7 @@ int main() {
 
 	for (int i = 0; i < NUM_ENTITIES; i++) {
 		for (int j = i + 1; j < NUM_ENTITIES; j++) {
-			if (eArray[i].getaggroRangeSQ() <= eArray[i].distanceBetweenSQ(eArray[j])) {
+			if (eArray[i].getaggroRangeSQ() >= eArray[i].distanceBetweenSQ(eArray[j])) {
 				cout << i << " aggro'd " << j << endl;
 				eArray[i].setEntitiesInRange(eArray[i].getEntitiesInRange() + 1);
 			}
@@ -34,9 +34,11 @@ int main() {
 	}
 	for (int i = 0; i < NUM_ENTITIES; i++) {
 	
-		cout << eArray[i] << eArray[i].getEntitiesInRange() << endl;
-	
+		cout <<eArray[i]<<"\t In range:" << eArray[i].getEntitiesInRange() << endl;
+		eArray[i].resetEntitiesInRange();
 	}
+
+
 
 	int x;
 	cin >> x;
