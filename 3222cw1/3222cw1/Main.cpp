@@ -1,12 +1,17 @@
+#pragma once
 
 #include "Entity.h"
 #include <time.h>  
+#include "Vector3.h"
+#include "Suvat.h"
 
 #define MAX_X 10
 #define MAX_Y 10
 #define MAX_Z 1
 #define MAX_R 5
 #define NUM_ENTITIES 10
+
+
 
 int main() {
 
@@ -17,12 +22,19 @@ int main() {
 	//instantiate NUM_ENTITIES worth of Entities with random values
 	for (int i = 0; i < NUM_ENTITIES; i++) {
 		eArray[i] = Entity(
-			rand() % MAX_X,
-			rand() % MAX_Y,
-			rand() % MAX_Z,
-			rand() % MAX_R
+			(float)(rand() % MAX_X),
+			(float)(rand() % MAX_Y),
+			(float)(rand() % MAX_Z),
+			(float)(rand() % MAX_R)
 		);
 	}
+	/*Entity entity = Entity(
+		(float)(rand() % MAX_X),
+		(float)(rand() % MAX_Y),
+		(float)(rand() % MAX_Z),
+		(float)(rand() % MAX_R));
+
+	eArray[0] = entity;*/
 
 	for (int i = 0; i < NUM_ENTITIES; i++) {
 		for (int j = i + 1; j < NUM_ENTITIES; j++) {
@@ -33,13 +45,13 @@ int main() {
 		}
 	}
 	for (int i = 0; i < NUM_ENTITIES; i++) {
-	
-		cout <<eArray[i]<<"\t In range:" << eArray[i].getEntitiesInRange() << endl;
+
+		cout << eArray[i] << "\t In range:" << eArray[i].getEntitiesInRange() << endl;
 		eArray[i].resetEntitiesInRange();
 	}
 
+	Vector3 v = Suvat::VUAT();
 
 
-	int x;
-	cin >> x;
+
 }

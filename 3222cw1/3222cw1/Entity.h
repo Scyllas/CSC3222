@@ -16,16 +16,16 @@ public:
 	inline void resetEntitiesInRange() { entitiesInRange = 0; }
 	float distanceBetweenSQ(Entity e);
 
-	inline float getX() const { return position->x; }
-	inline float getY() const { return position->y; }
-	inline float getZ() const { return position->z; }
+	inline float getX() const { return position.x; }
+	inline float getY() const { return position.y; }
+	inline float getZ() const { return position.z; }
 	inline float getaggroRange() { return aggroRange; }
 	inline float getaggroRangeSQ() { return aggroRangeSQ; }
 	inline int getEntitiesInRange() { return entitiesInRange; }
 
-	inline void setX(float x) { position->x = x; }
-	inline void setY(float y) { position->y = y; }
-	inline void setZ(float z) { position->z = z; }
+	inline void setX(float x) { position.x = x; }
+	inline void setY(float y) { position.y = y; }
+	inline void setZ(float z) { position.z = z; }
 	inline void setEntitiesInRange(int e) { entitiesInRange = e; }
 	void setAggroRange(float r);
 
@@ -34,7 +34,7 @@ public:
  
 protected:
 
-	Vector3* position;
+	Vector3 position;
 	float aggroRange;
 	float aggroRangeSQ;
 	int entitiesInRange;

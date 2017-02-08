@@ -12,10 +12,7 @@ using namespace std;
 //blank constructor
 Entity::Entity() {
 
-	position = new Vector3;
-	position->x = 0;
-	position->y = 0;
-	position->z = 0;
+	position = Vector3();
 
 	aggroRange = 0;
 	aggroRangeSQ = 0;
@@ -25,10 +22,7 @@ Entity::Entity() {
 //standard constructor
 Entity::Entity(float x, float y, float z, float r) {
 
-	position = new Vector3;
-	position->x = x;
-	position->y = y;
-	position->z = z;
+	position = Vector3(x, y, z);
 
 	aggroRange = r;
 	aggroRangeSQ = r * r;
@@ -38,11 +32,7 @@ Entity::Entity(float x, float y, float z, float r) {
 //copy constructor
 Entity::Entity(const Entity &obj) {
 
-	position = new Vector3;
-	position->x = obj.position->x;
-	position->y = obj.position->y;
-	position->z = obj.position->z;
-
+	position = Vector3(obj.position.x, obj.position.y, obj.position.z);
 	aggroRange = obj.aggroRange;
 	aggroRangeSQ = obj.aggroRangeSQ;
 	entitiesInRange = obj.entitiesInRange;
@@ -62,17 +52,17 @@ void Entity::setAggroRange(float r) {
 float Entity::distanceBetweenSQ(Entity e) {
 
 	return
-		pow(position->x - e.position->x, 2) +
-		pow(position->y - e.position->y, 2) +
-		pow(position->z - e.position->z, 2);
+		pow(position.x - e.position.x, 2) +
+		pow(position.y - e.position.y, 2) +
+		pow(position.z - e.position.z, 2);
 }
 
 ostream & operator<<(ostream & stream, const Entity & entity)
 {
-	stream << "Entity: (" << 
-		entity.position->x << ", " <<
-		entity.position->y << ", " <<
-		entity.position->z << "), r = " <<
+	stream << "Entity: (" <<
+		entity.position.x << ", " <<
+		entity.position.y << ", " <<
+		entity.position.z << "), r = " <<
 		entity.aggroRange;
 
 	return stream;
