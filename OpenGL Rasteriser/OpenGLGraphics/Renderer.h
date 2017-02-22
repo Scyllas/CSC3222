@@ -14,7 +14,7 @@ public:
 	Renderer(Window &parent);
 	~Renderer(void);
 
-	GLuint LoadTexture(string filename);
+	GLuint LoadTexture(string filename, unsigned int flag);
 
 	virtual void	RenderScene();
 
@@ -30,10 +30,8 @@ protected:
 
 	float accumTime = 1;
 
-	GLuint	smileyTex;
-	GLuint	staticTex;
-	GLuint	nyanTex;
-	GLuint	perlinTex;
+	GLuint	mapTex;
+	
 	RenderObject spritesObject;
 	
 	vector<RenderObject*> renderObjects;

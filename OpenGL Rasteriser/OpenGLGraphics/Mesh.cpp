@@ -80,29 +80,7 @@ void Mesh::Draw() {
 	glBindVertexArray(0);
 }
 
-Mesh* Mesh::GenerateTriangle() {
-	Mesh*m = new Mesh();
-	m->numVertices = 3;
 
-	m->vertices = new Vector3[m->numVertices];
-	m->vertices[0] = Vector3(0.0f, 0.5f, 0.0f);
-	m->vertices[1] = Vector3(0.5f, -0.5f, 0.0f);
-	m->vertices[2] = Vector3(-0.5f, -0.5f, 0.0f);
-
-	m->textureCoords = new Vector2[m->numVertices];
-	m->textureCoords[0] = Vector2(0.5f, 0.0f);
-	m->textureCoords[1] = Vector2(1.0f, 1.0f);
-	m->textureCoords[2] = Vector2(0.0f, 1.0f);
-
-	m->colours = new Vector4[m->numVertices];
-	m->colours[0] = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	m->colours[1] = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
-	m->colours[2] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
-
-	m->BufferData();
-
-	return m;
-}
 
 Mesh*	Mesh::LoadMeshFile(const string &filename) {
 	ifstream f(filename);
@@ -248,24 +226,64 @@ Mesh * Mesh::GeneratePoints(unsigned int count) {
 	m->BufferData();
 	return m;
 }
+
+Mesh* Mesh::GenerateTriangle() {
+	Mesh*m = new Mesh();
+	m->numVertices = 3;
+
+	m->vertices = new Vector3[m->numVertices];
+	m->vertices[0] = Vector3(0.0f, 0.5f, 0.0f);
+	m->vertices[1] = Vector3(0.5f, -0.5f, 0.0f);
+	m->vertices[2] = Vector3(-0.5f, -0.5f, 0.0f);
+
+	m->textureCoords = new Vector2[m->numVertices];
+	m->textureCoords[0] = Vector2(0.5f, 0.0f);
+	m->textureCoords[1] = Vector2(1.0f, 1.0f);
+	m->textureCoords[2] = Vector2(0.0f, 1.0f);
+
+	m->colours = new Vector4[m->numVertices];
+	m->colours[0] = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+	m->colours[1] = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+	m->colours[2] = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+
+	m->BufferData();
+
+	return m;
+}
 Mesh * Mesh::GenerateQuadPatch() {
 	Mesh * m = new Mesh();
-	m -> numVertices = 4; // Number of vertices
-	m -> type = GL_PATCHES; // The OpenGL render type
-	m -> vertices = new Vector3[m -> numVertices];
-	m -> textureCoords = new Vector2[m -> numVertices];
+	m->numVertices = 4; // Number of vertices
+	m->type = GL_TRIANGLE_STRIP; // The OpenGL render type
+	m->vertices = new Vector3[m->numVertices];
+	m->textureCoords = new Vector2[m->numVertices];
+	/*
+		m->vertices[0] = Vector3(-1.0f, -1.0f, 0.0f);
+		m->vertices[1] = Vector3(1.0f, -1.0f, 0.0f);
+		m->vertices[2] = Vector3(1.0f, 1.0f, 0.0f);
+		m->vertices[3] = Vector3(-1.0f, -1.0f, 0.0f);
+		m->vertices[4] = Vector3(-1.0f, 1.0f, 0.0f);
+		m->vertices[5] = Vector3(1.0f, 1.0f, 0.0f);
 
-	m -> vertices[0] = Vector3(-1.0f, -1.0f, 0.0f);
-	m -> vertices[1] = Vector3(-1.0f, 1.0f, 0.0f);
-	m -> vertices[2] = Vector3(1.0f, -1.0f, 0.0f);
-	m -> vertices[3] = Vector3(1.0f, 1.0f, 0.0f);
+		m->textureCoords[0] = Vector2(0.0f, 1.0f);
+		m->textureCoords[1] = Vector2(1.0f, 1.0f);
+		m->textureCoords[2] = Vector2(1.0f, 0.0f);
+		m->textureCoords[3] = Vector2(0.0f, 1.0f);
+		m->textureCoords[4] = Vector2(0.0f, 0.0f);
+		m->textureCoords[5] = Vector2(1.0f, 0.0f);
+	*/
+	m->vertices[0] = Vector3(-1.0f, -1.0f, 0.0f);
+	m->vertices[1] = Vector3(-1.0f, 1.0f, 0.0f);
+	m->vertices[2] = Vector3(1.0f, -1.0f, 0.0f);
+	m->vertices[3] = Vector3(1.0f, 1.0f, 0.0f);
 
-	m -> textureCoords[0] = Vector2(0.0f, 1.0f);
-	m -> textureCoords[1] = Vector2(0.0f, 0.0f);
-	m -> textureCoords[2] = Vector2(1.0f, 1.0f);
-	m -> textureCoords[3] = Vector2(1.0f, 0.0f);
 
-	m -> BufferData(); // Function containing all of the VAO and VBO setup
+	m->textureCoords[0] = Vector2(0.0f, 1.0f);
+	m->textureCoords[1] = Vector2(0.0f, 0.0f);
+	m->textureCoords[2] = Vector2(1.0f, 1.0f);
+	m->textureCoords[3] = Vector2(1.0f, 0.0f);
+
+
+	m->BufferData(); // Function containing all of the VAO and VBO setup
 
 	return m;
 

@@ -70,58 +70,67 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="AlphaFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicGeo.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="EditGeo.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="oscillateVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shrinkVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="vertFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="TexFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="ColourFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BlankVert.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="NoiseFrag.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="NoiseTessEval.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="NoiseTessCont.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicTessEval.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="BasicTessCont.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="cw_map.bmp">
+    <Image Include="Images\cw_map.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Images\noise.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\nyancat.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\perlin.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\smiley.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\vertFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\AlphaFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BasicFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BasicGeo.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BasicTessCont.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BasicTessEval.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BasicVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\BlankVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\EditGeo.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\NoiseFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\NoiseTessCont.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\NoiseTessEval.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\oscillateVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\shrinkVert.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\TexFrag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

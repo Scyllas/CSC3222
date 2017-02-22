@@ -3,10 +3,12 @@
 Renderer::Renderer(Window &parent) : OGLRenderer(parent) {
 
 
-	smileyTex = LoadTexture("smiley.png");
+	/*smileyTex = LoadTexture("smiley.png");
 	staticTex = LoadTexture("noise.png");
 	nyanTex = LoadTexture("nyancat.png");
-	perlinTex = LoadTexture("perlin.png");
+	perlinTex = LoadTexture("perlin.png");*/
+	mapTex = LoadTexture("Shaders/cw_map.bmp", NULL);
+
 	Mesh * points = Mesh::GeneratePoints(100);
 
 	glPatchParameteri(GL_PATCH_VERTICES, 3);
@@ -34,7 +36,7 @@ Renderer::~Renderer(void) {
 
 }
 
-GLuint Renderer::LoadTexture(string filename) {
+GLuint Renderer::LoadTexture(string filename, unsigned int flag) {
 
 	return SOIL_load_OGL_texture(filename.c_str(), SOIL_LOAD_AUTO,
 		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
@@ -67,15 +69,17 @@ void	Renderer::Render(const RenderObject &o) {
 
 		glUniform1f(glGetUniformLocation(program, "accumTime"), accumTime);
 
-		glUniform1i(glGetUniformLocation(program, "smileyTex"), 0);
+		glUniform1i(glGetUniformLocation(program, "mapTex"), 0);
+		/*glUniform1i(glGetUniformLocation(program, "smileyTex"), 0);
 		glUniform1i(glGetUniformLocation(program, "staticTex"), 1);
 		glUniform1i(glGetUniformLocation(program, "nyanTex"), 2);
 		glUniform1i(glGetUniformLocation(program, "diffuseTex"), 3);
 		glUniform1i(glGetUniformLocation(program, "perlinTex"), 4);
-	
+	*/
 
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, smileyTex); 
+		glBindTexture(GL_TEXTURE_2D, o.GetTexture());
+	/*	glBindTexture(GL_TEXTURE_2D, smileyTex); 
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, staticTex); 
 		glActiveTexture(GL_TEXTURE2);
@@ -84,7 +88,7 @@ void	Renderer::Render(const RenderObject &o) {
 		glBindTexture(GL_TEXTURE_2D, o.GetTexture());
 		glActiveTexture(GL_TEXTURE4);
 		glBindTexture(GL_TEXTURE_2D, perlinTex);
-
+		*/
 
 		o.Draw();
 	}

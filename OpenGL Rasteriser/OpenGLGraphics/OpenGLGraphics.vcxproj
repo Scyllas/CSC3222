@@ -90,27 +90,28 @@
     <ClInclude Include="Suvat.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AlphaFrag.glsl" />
-    <None Include="BasicFrag.glsl" />
-    <None Include="BasicTessCont.glsl" />
-    <None Include="BasicTessEval.glsl" />
-    <None Include="NoiseTessCont.glsl" />
-    <None Include="NoiseTessEval.glsl" />
-    <None Include="BasicVert.glsl" />
-    <None Include="BasicGeo.glsl" />
-    <None Include="BlankVert.glsl" />
-    <None Include="ColourFrag.glsl" />
-    <None Include="EditGeo.glsl">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-    </None>
-    <None Include="NoiseFrag.glsl" />
-    <None Include="oscillateVert.glsl" />
-    <None Include="shrinkVert.glsl" />
-    <None Include="TexFrag.glsl" />
-    <None Include="vertFrag.glsl" />
+    <Image Include="Images\cw_map.bmp" />
+    <Image Include="Images\noise.png" />
+    <Image Include="Images\nyancat.png" />
+    <Image Include="Images\perlin.png" />
+    <Image Include="Images\smiley.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="cw_map.bmp" />
+    <None Include="Shaders\AlphaFrag.glsl" />
+    <None Include="Shaders\BasicFrag.glsl" />
+    <None Include="Shaders\BasicGeo.glsl" />
+    <None Include="Shaders\BasicTessCont.glsl" />
+    <None Include="Shaders\BasicTessEval.glsl" />
+    <None Include="Shaders\BasicVert.glsl" />
+    <None Include="Shaders\BlankVert.glsl" />
+    <None Include="Shaders\EditGeo.glsl" />
+    <None Include="Shaders\NoiseFrag.glsl" />
+    <None Include="Shaders\NoiseTessCont.glsl" />
+    <None Include="Shaders\NoiseTessEval.glsl" />
+    <None Include="Shaders\oscillateVert.glsl" />
+    <None Include="Shaders\shrinkVert.glsl" />
+    <None Include="Shaders\TexFrag.glsl" />
+    <None Include="Shaders\vertFrag.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
