@@ -14,16 +14,18 @@ Entity::Entity() {
 
 	position = Vector3();
 
+	mass = 1;
 	aggroRange = 0;
 	aggroRangeSQ = 0;
 	entitiesInRange = 0;
 
 }
 //standard constructor
-Entity::Entity(float x, float y, float z, float r) {
+Entity::Entity(float x, float y, float z, float r, float m) {
 
 	position = Vector3(x, y, z);
 
+	mass = m;
 	aggroRange = r;
 	aggroRangeSQ = r * r;
 	entitiesInRange = 0;
@@ -33,6 +35,7 @@ Entity::Entity(float x, float y, float z, float r) {
 Entity::Entity(const Entity &obj) {
 
 	position = Vector3(obj.position.x, obj.position.y, obj.position.z);
+	mass = obj.mass;
 	aggroRange = obj.aggroRange;
 	aggroRangeSQ = obj.aggroRangeSQ;
 	entitiesInRange = obj.entitiesInRange;
