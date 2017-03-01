@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../nclgl/Vector3.h"
+#include "../3222cw1/Vector3.h"
 
 using namespace std;
 

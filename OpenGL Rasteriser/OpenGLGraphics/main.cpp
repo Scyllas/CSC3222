@@ -1,144 +1,144 @@
-#include "Renderer.h"
-#include "RenderObject.h"
+#include "Drawing.h"
+#include "GenerateTiles.h"
 
 #pragma comment(lib, "nclgl.lib")
 
+struct Cells {
+	Vector3
+		forest,
+		field,
+		grass,
+		water,
+		bridge,
+		goal,
+		start,
+		castle,
+		wall;
 
-Matrix4 sceneControls(Matrix4 viewMatrix) {
+};
 
-	Vector3 camTranslate = Vector3(0, 0, -8);
-	float speed = 0.01f;
+void squareToSquare(Entity* s1, Entity* s2) {
 
-	if (Keyboard::KeyDown(KEY_PLUS)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Scale(Vector3(1.1, 1.1, 1.1));
 
+	// collision calculation sourced from
+	// https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+
+	float s1x = s1->getX();
+	float s1y = s1->getY();
+	float s1w = s1->getD() * 2;
+	float s2x = s2->getX();
+	float s2y = s2->getY();
+	float s2w = s2->getD() * 2;
+
+	if (
+		s1x < s2x + s2w &&
+		s1x + s1w > s2x &&
+		s1y < s2y + s2w &&
+		s1w + s1y > s2y) {
+
+		//return true;
+		//perform collision resolution
 	}
-	if (Keyboard::KeyDown(KEY_MINUS)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Scale(Vector3(0.9, 0.9, 0.9));
 
-	}
-	if (Mouse::ButtonDown(MOUSE_LEFT)) {
-		float yawX = 0.0f;
-		float yawY = 0.0f;
-		yawX += Mouse::GetRelativePosition().x;
-		viewMatrix = viewMatrix * Matrix4::Rotation(yawX, Vector3(0, 0.00001, 0));
-		yawY += Mouse::GetRelativePosition().y;
-		viewMatrix = viewMatrix * Matrix4::Rotation(yawY, Vector3(0.00001, 0, 0));
-	}
-	if (Keyboard::KeyTriggered(KEY_G)) {
+	else {
 
-		camTranslate.z += speed;
+		//return false;
 
+		//perform collision resolution
 	}
-	if (Keyboard::KeyTriggered(KEY_H)) {
-		camTranslate.z -= speed;
 
+}
+
+void collisionDetection(Entity* commander, vector<Entity*>& soldier) {
+
+	for (unsigned int i = 0; i < soldier.size(); i++) {
+		squareToSquare(commander, soldier[i]);
 	}
+
+	for (unsigned int i = 0; i < soldier.size(); i++) {
+		for (unsigned int j = i + 1; j < soldier.size(); j++) {
+			squareToSquare(soldier[i], soldier[j]);
+		}
+	}
+}
+
+void sceneControls(RenderObject* r, Tile t) {
+
+
+
+	Matrix4 temp = r->GetModelMatrix();
+
 	if (Keyboard::KeyDown(KEY_A)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(0.01f, 0, 0));
+		r->SetModelMatrix(temp *
+			Matrix4::Translation(Vector3(-0.1f, 0, 0)));
 
 	}
 	if (Keyboard::KeyDown(KEY_D)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(-0.01f, 0, 0));
+		r->SetModelMatrix(temp *
+			Matrix4::Translation(Vector3(0.1f, 0, 0)));
 
 	}
 	if (Keyboard::KeyDown(KEY_W)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(0.0, -0.01f, 0));
+		r->SetModelMatrix(temp *
+			Matrix4::Translation(Vector3(0.0, 0.1f, 0)));
 
 	}
 	if (Keyboard::KeyDown(KEY_S)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(0.0, 0.01f, 0));
-	}
-	if (Keyboard::KeyDown(KEY_CONTROL)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(0.0f, 0.0f, -0.01f));
-	}
-	if (Keyboard::KeyDown(KEY_SHIFT)) {
-		viewMatrix = viewMatrix *
-			Matrix4::Translation(Vector3(0.0, 0.0f, 0.01f));
+		r->SetModelMatrix(temp *
+			Matrix4::Translation(Vector3(0.0, -0.1f, 0)));
 	}
 
-	return viewMatrix;
+
 }
 
-void cam(RenderObject& o, Renderer& r) {
+void cam(Renderer& r) {
 
-	o.SetModelMatrix(Matrix4::Translation(Vector3(0, 0, 0)) * Matrix4::Scale(Vector3(1, 1, 1)));
 
-	r.AddRenderObject(o);
-	r.SetProjectionMatrix(Matrix4::Orthographic(0.5f, -0.5f, 0.5f, -0.5f, 0.5f, -0.5f));
+	r.SetProjectionMatrix(Matrix4::Orthographic(1.f, -1.f, 1.f, -1.f, 1.f, -1.f));
 	//r.SetProjectionMatrix(Matrix4::Perspective(1, 100, 1.f, 45.0f));
-	r.SetViewMatrix(Matrix4::BuildViewMatrix(Vector3(0, 0, 0), Vector3(0, 0, -0.5)));
+	r.SetViewMatrix(Matrix4::BuildViewMatrix(Vector3(0, 0, 0), Vector3(0, 0, -1.f)));
 }
 
-RenderObject drawMap(Renderer &r, Shader* s) {
 
-	Mesh* m = Mesh::GenerateQuadPatch();
+Tile getCell(Entity* commander, Tile* tile) {
 
-	s = new Shader("Shaders/BasicVert.glsl", "Shaders/BasicFrag.glsl");
+	Vector3 coord = (commander->GetModelMatrix().GetPositionVector() * 10) + Vector3(10, 10, 0);
 
-	if (s->UsingDefaultShader()) {
-		cout << "Warning: Using default shader! Your shader probably hasn't worked..." << endl;
-		cout << "Press any key to continue." << endl;
-		std::cin.get();
-	}
-	GLuint texture = r.LoadTexture("Images/cw_map.bmp", NULL);
-
-	return RenderObject(m, s, texture);
+	return tile[(10 * (int)coord.y) + (int)coord.x];
 }
-
 
 void main(void) {
 	int dimensions = 800;
 	Window w = Window(dimensions, dimensions);
 	Renderer r(w);
 
+	int soldierNum = 4;
+
 	Mesh*	m = Mesh::GenerateQuadPatch();
+	Shader* s = new Shader("Shaders/BasicVert.glsl", "Shaders/BasicFrag.glsl");
 
-	Shader* x = new Shader("Shaders/BasicVert.glsl", "Shaders/BasicFrag.glsl");
+	cam(r);
+	Drawing d;
+	GenerateTiles g;
+	Tile* tile = g.getTiles();
+	Entity commander = d.drawCommander(m, r, s);
+	vector<Entity*> soldier = vector<Entity*>();
+	RenderObject map = d.drawMap(m, r, s);
 
-	if (x->UsingDefaultShader()) {
-		cout << "Warning: Using default shader! Your shader probably hasn't worked..." << endl;
-		cout << "Press any key to continue." << endl;
-		std::cin.get();
+
+	r.AddRenderObject(commander);
+
+	for (int i = 0; i < soldierNum; i++) {
+		soldier.push_back(d.drawSoldier(m, r, s));
+		r.AddRenderObject(*soldier[i]);
 	}
-	GLuint texture = r.LoadTexture("Images/cw_map.bmp", NULL);
-	RenderObject n(m, x, texture);
-
-	r.AddRenderObject(n);
-
-	r.SetProjectionMatrix(Matrix4::Perspective(1, 100, 1.f, 45.0f));
-
-	r.SetViewMatrix(Matrix4::BuildViewMatrix(Vector3(0, 0, 0), Vector3(0, 0, -10)));
-	
-	Matrix4 viewMatrix = Matrix4::Translation(Vector3(0, 0, -10.0f));
+	r.AddRenderObject(map);
 
 
 
-	Shader* s = NULL;
 
-	//RenderObject o = drawMap(r, s);
-
-
-	/*
-		int imageWidth = -1;
-		int imageHeight = -1;
-		int imageChannel = -1;
-		int ImageChannelForce = SOIL_LOAD_AUTO;
-		unsigned char* background = SOIL_load_image("cw_map.bmp",
-			&imageWidth, &imageHeight, &imageChannel, ImageChannelForce);
-	*/
 
 	//cout << s->GetShaderProgram() << endl;
-
-
-	//o.SetModelMatrix(Matrix4::Translation(Vector3(0, 0, -10)) * Matrix4::Scale(Vector3(1, 1, 1)));
 
 	float msec = w.GetTimer()->GetTimedMS();
 	float accumTime = 1.f;
@@ -146,18 +146,15 @@ void main(void) {
 	while (w.UpdateWindow()) {
 
 		msec = w.GetTimer()->GetTimedMS();
-		accumTime += msec;
+
+		collisionDetection(&commander, soldier);
+		//no between -1 and 1
 
 
-		viewMatrix = sceneControls(viewMatrix);
 
-		n.SetModelMatrix(
-			Matrix4::Translation(Vector3(0, 0, -10)) *
-		//	Matrix4::Rotation(0.1f * accumTime, Vector3(1, 0.8, 0.3))*
-			Matrix4::Scale(Vector3(1, 1, 1))
-		);
 
-		r.SetViewMatrix(viewMatrix);
+		sceneControls(&commander, getCell(&commander, tile));
+
 		r.UpdateScene(msec);
 		r.ClearBuffers();
 		r.RenderScene();
@@ -165,5 +162,8 @@ void main(void) {
 
 	}
 	delete s;
+	delete m;
+
+
 }
 

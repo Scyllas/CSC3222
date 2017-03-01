@@ -15,6 +15,19 @@ RenderObject::RenderObject(Mesh*m, Shader*s, GLuint t) {
 	parent  = NULL;
 }
 
+RenderObject::RenderObject(const RenderObject & obj)
+{
+	mesh = obj.mesh;
+	shader = obj.shader;
+	texture = obj.texture;
+
+	modelMatrix = obj.modelMatrix;
+	worldTransform = obj.worldTransform;
+
+	parent = obj.parent;
+	children = obj.children;
+}
+
 
 RenderObject::~RenderObject(void)
 {

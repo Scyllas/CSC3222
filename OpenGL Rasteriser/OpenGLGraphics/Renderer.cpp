@@ -39,19 +39,19 @@ Renderer::~Renderer(void) {
 GLuint Renderer::LoadTexture(string filename, unsigned int flag) {
 
 	return SOIL_load_OGL_texture(filename.c_str(), SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS);
+		SOIL_CREATE_NEW_ID, flag);
 
 }
 
 void	Renderer::RenderScene() {
-
+	ClearBuffers();
 	for (vector<RenderObject*>::iterator i = renderObjects.begin(); i != renderObjects.end(); ++i) {
 		Render(*(*i));
 	}
 }
 
 void	Renderer::Render(const RenderObject &o) {
-	ClearBuffers();
+	
 	modelMatrix = o.GetWorldTransform();
 
 
@@ -78,6 +78,8 @@ void	Renderer::Render(const RenderObject &o) {
 	*/
 
 		glActiveTexture(GL_TEXTURE0);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glBindTexture(GL_TEXTURE_2D, o.GetTexture());
 	/*	glBindTexture(GL_TEXTURE_2D, smileyTex); 
 		glActiveTexture(GL_TEXTURE1);

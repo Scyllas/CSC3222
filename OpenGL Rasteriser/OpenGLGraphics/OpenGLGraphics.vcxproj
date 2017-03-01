@@ -70,8 +70,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="codedump.cpp" />
+    <ClCompile Include="Drawing.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Euler.cpp" />
+    <ClCompile Include="GenerateTiles.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Main2.cpp" />
     <ClCompile Include="Mesh.cpp" />
@@ -79,22 +81,28 @@
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Suvat.cpp" />
+    <ClCompile Include="Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Drawing.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Euler.h" />
+    <ClInclude Include="GenerateTiles.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Suvat.h" />
+    <ClInclude Include="Tile.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Images\Commander.png" />
     <Image Include="Images\cw_map.bmp" />
     <Image Include="Images\noise.png" />
     <Image Include="Images\nyancat.png" />
     <Image Include="Images\perlin.png" />
     <Image Include="Images\smiley.png" />
+    <Image Include="Images\Soldier.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\AlphaFrag.glsl" />

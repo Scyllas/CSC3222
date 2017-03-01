@@ -45,6 +45,15 @@
     <ClCompile Include="Main2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Drawing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateTiles.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -68,6 +77,15 @@
     <ClInclude Include="Suvat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Drawing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateTiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\cw_map.bmp">
@@ -83,6 +101,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Images\smiley.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\Commander.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\Soldier.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

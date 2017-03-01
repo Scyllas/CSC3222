@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include "../nclgl/Vector3.h"
+#include "../3222cw1/Vector3.h"
 #include "Windows.h"
 
 using namespace std;
