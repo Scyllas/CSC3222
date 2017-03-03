@@ -27,8 +27,12 @@ public:
 	inline float getAggroRange() { return aggroRange; }
 	inline float getAggroRangeSQ() { return aggroRangeSQ; }
 	inline float getScaleFactor() { return scaleFactor; }
+	inline Vector3 getPosition() { return position; }
+	inline Vector3 getPrevVelocity() { return prevVelocity; }
+	inline Vector3 getPrevPos(int pp) { return prevPos[pp]; }
 	inline int getEntitiesInRange() { return entitiesInRange; }
-	
+	inline bool getIsCommander() { return isCommander; }
+
 
 	inline void setX(float x) { position.x = x; }
 	inline void setY(float y) { position.y = y; }
@@ -36,7 +40,11 @@ public:
 	inline void setMass(float m) { mass = m; }
 	inline void setEntitiesInRange(int e) { entitiesInRange = e; }
 	inline void setScaleFactor(float f) { scaleFactor = f; }
+	inline void setPosition(Vector3 p) { position = p; }
+	inline void setPrevVelocity(Vector3 v) { prevVelocity = v; }
+	inline void setIsCommander(bool b) { isCommander = b; }
 	void setAggroRange(float r);
+	void setPrevPos(Vector3 v);
 
 	friend ostream& operator<<(ostream &os, const Entity &entity);
 
@@ -44,6 +52,8 @@ public:
 protected:
 	Vector3* prevPos;
 	Vector3 position;
+	Vector3 prevVelocity;
+	bool isCommander;
 	float diameter;
 	float scaleFactor;
 	float mass;

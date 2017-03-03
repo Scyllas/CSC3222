@@ -1,23 +1,17 @@
 #include "Drawing.h"
 #include "GenerateTiles.h"
+#include "Movement.h"
 
 #pragma comment(lib, "nclgl.lib")
 
-struct Cells {
-	Vector3
-		forest,
-		field,
-		grass,
-		water,
-		bridge,
-		goal,
-		start,
-		castle,
-		wall;
+Tile getCell(Entity* commander, Tile* tile) {
 
-};
+	Vector3 coord = (commander->GetModelMatrix().GetPositionVector() * 10) + Vector3(10, 10, 0);
 
-void squareToSquare(Entity* s1, Entity* s2) {
+	return tile[(20 * (int)coord.y) + (int)coord.x];
+}
+
+void squareToSquare(Tile* tiles, Movement move, Entity* s1, Entity* s2) {
 
 
 	// collision calculation sourced from
@@ -37,59 +31,24 @@ void squareToSquare(Entity* s1, Entity* s2) {
 		s1w + s1y > s2y) {
 
 		//return true;
-		//perform collision resolution
-	}
-
-	else {
-
-		//return false;
-
-		//perform collision resolution
+		move.collisionResolution(s1, getCell(s1, tiles), s2, getCell(s2, tiles));
 	}
 
 }
 
-void collisionDetection(Entity* commander, vector<Entity*>& soldier) {
+void collisionDetection(Tile* tiles, Movement move, Entity* commander, vector<Entity*>& soldier) {
 
 	for (unsigned int i = 0; i < soldier.size(); i++) {
-		squareToSquare(commander, soldier[i]);
+		squareToSquare(tiles, move, commander, soldier[i]);
 	}
 
 	for (unsigned int i = 0; i < soldier.size(); i++) {
 		for (unsigned int j = i + 1; j < soldier.size(); j++) {
-			squareToSquare(soldier[i], soldier[j]);
+			squareToSquare(tiles, move, soldier[i], soldier[j]);
 		}
 	}
 }
 
-void sceneControls(RenderObject* r, Tile t) {
-
-
-
-	Matrix4 temp = r->GetModelMatrix();
-
-	if (Keyboard::KeyDown(KEY_A)) {
-		r->SetModelMatrix(temp *
-			Matrix4::Translation(Vector3(-0.1f, 0, 0)));
-
-	}
-	if (Keyboard::KeyDown(KEY_D)) {
-		r->SetModelMatrix(temp *
-			Matrix4::Translation(Vector3(0.1f, 0, 0)));
-
-	}
-	if (Keyboard::KeyDown(KEY_W)) {
-		r->SetModelMatrix(temp *
-			Matrix4::Translation(Vector3(0.0, 0.1f, 0)));
-
-	}
-	if (Keyboard::KeyDown(KEY_S)) {
-		r->SetModelMatrix(temp *
-			Matrix4::Translation(Vector3(0.0, -0.1f, 0)));
-	}
-
-
-}
 
 void cam(Renderer& r) {
 
@@ -100,17 +59,14 @@ void cam(Renderer& r) {
 }
 
 
-Tile getCell(Entity* commander, Tile* tile) {
 
-	Vector3 coord = (commander->GetModelMatrix().GetPositionVector() * 10) + Vector3(10, 10, 0);
 
-	return tile[(10 * (int)coord.y) + (int)coord.x];
-}
 
 void main(void) {
 	int dimensions = 800;
 	Window w = Window(dimensions, dimensions);
 	Renderer r(w);
+
 
 	int soldierNum = 4;
 
@@ -120,11 +76,12 @@ void main(void) {
 	cam(r);
 	Drawing d;
 	GenerateTiles g;
+	Movement move;
 	Tile* tile = g.getTiles();
 	Entity commander = d.drawCommander(m, r, s);
 	vector<Entity*> soldier = vector<Entity*>();
 	RenderObject map = d.drawMap(m, r, s);
-
+	commander.setIsCommander(true);
 
 	r.AddRenderObject(commander);
 
@@ -136,7 +93,7 @@ void main(void) {
 
 
 
-
+	char* string = "hello";
 
 	//cout << s->GetShaderProgram() << endl;
 
@@ -147,13 +104,9 @@ void main(void) {
 
 		msec = w.GetTimer()->GetTimedMS();
 
-		collisionDetection(&commander, soldier);
-		//no between -1 and 1
+		//collisionDetection(tile, move, &commander, soldier);
 
-
-
-
-		sceneControls(&commander, getCell(&commander, tile));
+		move.sceneControls(&commander, getCell(&commander, tile));
 
 		r.UpdateScene(msec);
 		r.ClearBuffers();

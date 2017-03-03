@@ -11,8 +11,19 @@ using namespace std;
 
 //blank constructor
 Entity::Entity() {
+	
+	int val = 50;
+	prevPos[val];
+	for (int i = 0; i < val; i++) {
+		setPosition(Vector3(0, 0, 0));
+	}
 
-	position = Vector3();
+	prevVelocity = Vector3(0, 0, 0);
+	isCommander = false;
+	diameter = 32.f;
+	float scaleFactor = 1;
+
+	position = Vector3(0, 0, 0);
 
 	mass = 1;
 	aggroRange = 0;
@@ -27,7 +38,16 @@ Entity::Entity() {
 }
 //standard constructor
 Entity::Entity(float x, float y, float z, float r, float ma) {
+	
+	int val = 50;
+	prevPos[val];
+	for (int i = 0; i < val; i++) {
+		setPosition(Vector3(0, 0, 0));
+	}
 
+	prevVelocity = Vector3(0, 0, 0);
+	isCommander = false;
+	
 	position = Vector3(x, y, z);
 
 	mass = ma;
@@ -46,16 +66,22 @@ Entity::Entity(float x, float y, float z, float r, float ma) {
 //full constructor
 Entity::Entity(float x, float y, float z, float r, float ma, float sf, Mesh*m, Shader*s, GLuint t) {
 
+	int val = 50;
+	prevPos[val];
+	for (int i = 0; i < val; i++) {
+		setPosition(Vector3(0,0,0));
+	}
+
 	position = Vector3(x, y, z);
 
 	mass = ma;
 	aggroRange = r;
 	aggroRangeSQ = r * r;
 	entitiesInRange = 0;
-	prevPos[50];
 	scaleFactor = sf;
 	diameter = 32.f * sf;
-	
+	prevVelocity = Vector3();
+	isCommander = false;
 
 	mesh = m;
 	shader = s;
@@ -92,6 +118,14 @@ Entity::~Entity() {
 void Entity::setAggroRange(float r) {
 	aggroRange = r;
 	aggroRangeSQ = r * r;
+}
+
+void Entity::setPrevPos(Vector3 v) {
+
+	for (int i = 48; i > 0; i++) {
+		prevPos[i] = prevPos[i - 1];
+	}
+	prevPos[0] = v;
 }
 
 

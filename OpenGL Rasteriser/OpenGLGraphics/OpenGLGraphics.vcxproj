@@ -77,6 +77,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Main2.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RenderObject.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Euler.h" />
     <ClInclude Include="GenerateTiles.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Movement.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RenderObject.h" />
     <ClInclude Include="Shader.h" />

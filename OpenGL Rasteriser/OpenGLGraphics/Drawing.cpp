@@ -29,8 +29,9 @@ Entity* Drawing::drawSoldier(Mesh* m, Renderer &r, Shader* s) {
 	float x = (rand() % 20 + 75)* 0.01f;
 	float y = (rand() % 20 + 75)* 0.01f;
 	float sf = 0.025f;
-
+	
 	Entity* soldier = new Entity(x, y, 0.f, 0.f, 1.f, sf, m, s, texture);
+	soldier->setIsCommander(false);
 
 	soldier->SetModelMatrix(Matrix4::Translation(Vector3(x, y, 0.f)) * Matrix4::Scale(Vector3(sf, sf, sf)));
 
@@ -52,6 +53,8 @@ Entity Drawing::drawCommander(Mesh* m, Renderer &r, Shader* s) {
 	float sf = 0.025f;
 
 	Entity commander = Entity(x, y, 0.f, 0.f, 5.f, sf, m, s, texture);
+	commander.setIsCommander(true);
+
 	commander.SetModelMatrix(Matrix4::Translation(Vector3(x, y, 0.f)) * Matrix4::Scale(Vector3(sf, sf, sf)));
 
 	return commander;
