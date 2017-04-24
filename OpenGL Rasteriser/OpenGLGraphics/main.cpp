@@ -1,14 +1,57 @@
 #include "Drawing.h"
 #include "GenerateTiles.h"
 #include "Movement.h"
+#include <time.h>
 
 #pragma comment(lib, "nclgl.lib")
 
-Tile getCell(Entity* commander, Tile* tile) {
 
-	Vector3 coord = (commander->GetModelMatrix().GetPositionVector() * 10) + Vector3(10, 10, 0);
 
-	return tile[(20 * (int)coord.y) + (int)coord.x];
+int* getCells(Entity* commander, Tile* tile, float rad) {
+
+	Vector3 commanderPos = (commander->GetModelMatrix().GetPositionVector() * 10) + Vector3(10, 10, 0);
+	float commandX = commanderPos.x;
+	float commandY = commanderPos.y;
+	rad = rad * 20;
+	float rad45 = rad* cos45;
+
+	Vector3 t(commandX, commandY + rad, 0);
+	Vector3 b(commandX, commandY - rad, 0);
+
+	Vector3 l(commandX - rad, commandY, 0);
+	Vector3 r(commandX + rad, commandY, 0);
+
+	Vector3 tl(commandX - rad45, commandY + rad45, 0);
+	Vector3 tr(commandX + rad45, commandY + rad45, 0);
+
+	Vector3 bl(commandX - rad45, commandY - rad45, 0);
+	Vector3 br(commandX + rad45, commandY - rad45, 0);
+
+	int* tiles = new int[SIZE_OF_ARRAYPOINTS];
+
+	tiles[0] = (20 * (int)t.y) + (int)t.x;
+	tiles[1] = (20 * (int)b.y) + (int)b.x;
+
+	tiles[2] = (20 * (int)l.y) + (int)l.x;
+	tiles[3] = (20 * (int)r.y) + (int)r.x;
+	
+	tiles[4] = (20 * (int)tl.y) + (int)tl.x;
+	tiles[5] = (20 * (int)tr.y) + (int)tr.x;
+
+	tiles[6] = (20 * (int)bl.y) + (int)bl.x;
+	tiles[7] = (20 * (int)br.y) + (int)br.x;
+
+	/*cout <<
+		rad << ", " <<
+		tiles[0] << ", " <<
+		tiles[1] << ", " <<
+		tiles[2] << ", " <<
+		tiles[3] << ", " <<
+		tiles[4] << ", " <<
+		tiles[5] << ", " <<
+		tiles[6] << ", " <<
+		tiles[7] << endl;*/
+	return tiles;
 }
 
 void squareToSquare(Tile* tiles, Movement move, Entity* s1, Entity* s2) {
@@ -19,19 +62,19 @@ void squareToSquare(Tile* tiles, Movement move, Entity* s1, Entity* s2) {
 
 	float s1x = s1->getX();
 	float s1y = s1->getY();
-	float s1w = s1->getD() * 2;
-	float s2x = s2->getX();
 	float s2y = s2->getY();
-	float s2w = s2->getD() * 2;
-
+	float s2x = s2->getX();
+	float s1rad = s1->getD() * 0.5f *  SCALE_FACTOR;
+	float s2rad = s2->getD() * 0.5f *  SCALE_FACTOR;
+	
 	if (
-		s1x < s2x + s2w &&
-		s1x + s1w > s2x &&
-		s1y < s2y + s2w &&
-		s1w + s1y > s2y) {
+		s1x < s2x + s2rad &&
+		s1x + s1rad > s2x &&
+		s1y < s2y + s2rad &&
+		s1rad + s1y > s2y) {
 
 		//return true;
-		move.collisionResolution(s1, getCell(s1, tiles), s2, getCell(s2, tiles));
+		move.collisionResolution(s1, getCells(s1, tiles, s1rad), s2, getCells(s2, tiles, s2rad));
 	}
 
 }
@@ -63,10 +106,12 @@ void cam(Renderer& r) {
 
 
 void main(void) {
-	int dimensions = 800;
+
+	srand(time(NULL));
+
+	int dimensions = 1000;
 	Window w = Window(dimensions, dimensions);
 	Renderer r(w);
-
 
 	int soldierNum = 4;
 
@@ -83,6 +128,8 @@ void main(void) {
 	RenderObject map = d.drawMap(m, r, s);
 	commander.setIsCommander(true);
 
+	float rad = commander.getD() / 2.f;
+
 	r.AddRenderObject(commander);
 
 	for (int i = 0; i < soldierNum; i++) {
@@ -91,9 +138,6 @@ void main(void) {
 	}
 	r.AddRenderObject(map);
 
-
-
-	char* string = "hello";
 
 	//cout << s->GetShaderProgram() << endl;
 
@@ -104,9 +148,9 @@ void main(void) {
 
 		msec = w.GetTimer()->GetTimedMS();
 
-		//collisionDetection(tile, move, &commander, soldier);
+		//	collisionDetection(tile, move, &commander, soldier);
 
-		move.sceneControls(&commander, getCell(&commander, tile));
+		move.sceneControls(&commander, getCells(&commander, tile, rad), tile, rad);
 
 		r.UpdateScene(msec);
 		r.ClearBuffers();

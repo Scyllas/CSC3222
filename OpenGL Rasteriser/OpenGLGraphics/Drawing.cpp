@@ -24,7 +24,7 @@ Entity* Drawing::drawSoldier(Mesh* m, Renderer &r, Shader* s) {
 		cout << "Press any key to continue." << endl;
 		std::cin.get();
 	}
-	GLuint texture = r.LoadTexture("Images/Soldier.bmp", NULL);
+	GLuint texture = r.LoadTexture("Images/Soldier.png", NULL);
 
 	float x = (rand() % 20 + 75)* 0.01f;
 	float y = (rand() % 20 + 75)* 0.01f;
@@ -46,7 +46,7 @@ Entity Drawing::drawCommander(Mesh* m, Renderer &r, Shader* s) {
 		cout << "Press any key to continue." << endl;
 		std::cin.get();
 	}
-	GLuint texture = r.LoadTexture("Images/Commander.bmp", NULL);
+	GLuint texture = r.LoadTexture("Images/Commander.png", NULL);
 
 	float x = 0.85f;
 	float y = 0.85f;
